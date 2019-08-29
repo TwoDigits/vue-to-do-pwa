@@ -4,7 +4,10 @@ import axios from 'axios'
 const API_URL = 'https://cors-anywhere.herokuapp.com/https://j6fo38azgk.execute-api.eu-central-1.amazonaws.com/dev'
 
 const config = {
-  baseURL: API_URL
+  baseURL: API_URL,
+  headers: {
+    Origin: 'https://todo.twodigits.io/'
+  }
 }
 
 export default {
