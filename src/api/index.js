@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 // TODO: Remove the cors-anywhere url on production
-const API_URL = 'https://cors-anywhere.herokuapp.com/https://os2for3n2l.execute-api.eu-central-1.amazonaws.com'
+const API_URL = 'https://cors-anywhere.herokuapp.com/https://j6fo38azgk.execute-api.eu-central-1.amazonaws.com/dev'
 
 const config = {
   baseURL: API_URL
