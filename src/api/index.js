@@ -4,10 +4,7 @@ import axios from 'axios'
 const API_URL = 'https://api.todo.twodigits.io'
 
 const config = {
-  baseURL: API_URL,
-  headers: {
-    Origin: 'https://todo.twodigits.io/'
-  }
+  baseURL: API_URL
 }
 
 export default {
