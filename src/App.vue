@@ -62,7 +62,7 @@ export default {
       //   icon: 'edit',
       //   title: 'To do'
       // }],
-      title: 'TwoDigits - TODO',
+      title: 'TwoDigits+ - TODO',
       refreshDisabled: false
     }
   },
