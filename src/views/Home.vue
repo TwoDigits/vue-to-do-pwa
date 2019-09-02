@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-text-field outline clearable v-model="todo" label="Todo..." @keydown.enter="create">
+    <v-text-field outline clearable v-model="todo" label="Add Todo..." @keydown.enter="create">
       <v-fade-transition slot="append">
         <v-progress-circular v-if="loading" color="info" size="24" indeterminate></v-progress-circular>
       </v-fade-transition>
