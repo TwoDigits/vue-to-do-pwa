@@ -14,9 +14,11 @@
     <v-layout my-1 align-center>
       <v-progress-circular :value="progress" class="mr-2"></v-progress-circular>
       <v-spacer></v-spacer>
-      <strong class="mx-3 info--text text--darken-3">Remaining: {{ remainingTodos }}</strong>
+      <strong v-if="filterRemainingActive" @click="filterRemaining" class="mx-3 info--text text--darken-3">Remaining: {{ remainingTodos }}</strong>
+      <div v-if="!filterRemainingActive" @click="filterRemaining" class="mx-3 info--text text--darken-3">Remaining: {{ remainingTodos }}</div>
       <v-divider vertical></v-divider>
-      <strong class="mx-3 green--text">Completed: {{ completedTodos }}</strong>
+      <strong v-if="filterCompletedActive" @click="filterCompleted" class="mx-3 green--text">Completed: {{ completedTodos }}</strong>
+      <div v-if="!filterCompletedActive" @click="filterCompleted" class="mx-3 green--text">Completed: {{ completedTodos }}</div>
     </v-layout>
 
     <v-divider class="mb-3"></v-divider>
