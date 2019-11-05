@@ -14,9 +14,11 @@
     <v-layout my-1 align-center>
       <v-progress-circular :value="progress" class="mr-2"></v-progress-circular>
       <v-spacer></v-spacer>
-      <strong class="mx-3 info--text text--darken-3">Remaining: {{ remainingTodos }}</strong>
+      <strong v-if="filterRemainingActive" @click="filterRemaining" class="mx-3 info--text text--darken-3">Remaining: {{ remainingTodos }}</strong>
+      <div v-if="!filterRemainingActive" @click="filterRemaining" class="mx-3 info--text text--darken-3">Remaining: {{ remainingTodos }}</div>
       <v-divider vertical></v-divider>
-      <strong class="mx-3 green--text">Completed: {{ completedTodos }}</strong>
+      <strong v-if="filterCompletedActive" @click="filterCompleted" class="mx-3 green--text">Completed: {{ completedTodos }}</strong>
+      <div v-if="!filterCompletedActive" @click="filterCompleted" class="mx-3 green--text">Completed: {{ completedTodos }}</div>
     </v-layout>
 
     <v-divider class="mb-3"></v-divider>
@@ -70,7 +72,6 @@
 
 <script>
 // @ is an alias to /src
-
 export default {
   name: 'home',
   data: () => ({
@@ -78,6 +79,8 @@ export default {
       required: value => !!value || 'Required.'
     },
     loading: false,
+    filterCompletedActive: false,
+    filterRemainingActive: false,
     todo: null
   }),
   async created () {
@@ -86,17 +89,18 @@ export default {
   components: {},
   computed: {
     todos () {
+      if (this.filterCompletedActive) return this.$store.state.todos.filter(todo => { return todo.done })
+      if (this.filterRemainingActive) return this.$store.state.todos.filter(todo => { return !todo.done })
       return this.$store.state.todos
     },
-
     completedTodos () {
-      return this.todos.filter(todo => todo.done).length
+      return this.$store.state.todos.filter(todo => todo.done).length
     },
     progress () {
-      return (this.completedTodos / this.todos.length) * 100
+      return (this.completedTodos / this.$store.state.todos.length) * 100
     },
     remainingTodos () {
-      return this.todos.length - this.completedTodos
+      return this.$store.state.todos.length - this.completedTodos
     }
   },
   methods: {
@@ -106,12 +110,10 @@ export default {
         done: false,
         title: this.todo
       }
-
       await this.$store.dispatch('createTodo', todo)
       this.todo = null
       this.loading = false
     },
-
     async updateTodo (todo) {
       delete todo._title
       if (!todo.title || todo.title === '') {
@@ -119,9 +121,16 @@ export default {
       }
       await this.$store.dispatch('updateTodo', todo)
     },
-
     async deleteTodo (id) {
       await this.$store.dispatch('deleteTodo', id)
+    },
+    async filterCompleted () {
+      this.filterCompletedActive = !this.filterCompletedActive
+      this.filterRemainingActive = false
+    },
+    async filterRemaining () {
+      this.filterRemainingActive = !this.filterRemainingActive
+      this.filterCompletedActive = false
     }
   }
 }
